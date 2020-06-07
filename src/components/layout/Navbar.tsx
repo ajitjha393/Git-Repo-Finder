@@ -1,19 +1,16 @@
-import React, { Component } from 'react'
+import React, { FC } from 'react'
 
 interface NavBarProps {
 	title: string
 }
 
-export class Navbar extends Component<NavBarProps> {
-	render() {
-		return (
-			<nav className="navbar bg-primary">
-				<h1>
-					<i className="fab fa-github " /> {this.props.title}
-				</h1>
-			</nav>
-		)
-	}
+const Navbar: FC<NavBarProps> = (props) => {
+	return (
+		<nav className="navbar bg-primary">
+			<h1>
+				<i className="fab fa-github " /> {props.title}
+			</h1>
+		</nav>
+	)
 }
-
 export default Navbar
