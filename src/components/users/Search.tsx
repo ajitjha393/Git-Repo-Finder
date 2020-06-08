@@ -1,6 +1,9 @@
 import React, { Component, FormEvent } from 'react'
 
-class Search extends Component<{ searchUsers: (text: string) => void }> {
+class Search extends Component<{
+	searchUsers: (text: string) => void
+	clearUsers: () => void
+}> {
 	state = {
 		text: '',
 	}
@@ -30,6 +33,12 @@ class Search extends Component<{ searchUsers: (text: string) => void }> {
 						className="btn btn-dark btn-block"
 					/>
 				</form>
+				<button
+					className="btn btn-light btn-block"
+					onClick={this.props.clearUsers}
+				>
+					Clear
+				</button>
 			</div>
 		)
 	}
