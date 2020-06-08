@@ -22,6 +22,7 @@ class Search extends Component<{ searchUsers: (text: string) => void }> {
 						onChange={(e) =>
 							this.setState({ text: e.target.value })
 						}
+						required
 					/>
 					<input
 						type="submit"
