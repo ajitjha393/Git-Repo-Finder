@@ -19,7 +19,9 @@ class App extends Component<{}, State> {
 		this.setState({ loading: true })
 
 		const resData: UserItemType[] = (
-			await axios.get('https://api.github.com/users')
+			await axios.get(
+				`https://api.github.com/users?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
+			)
 		).data
 		console.log(resData)
 		this.setState({ users: resData, loading: false })
