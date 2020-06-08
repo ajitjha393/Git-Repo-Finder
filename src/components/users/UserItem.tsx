@@ -1,16 +1,13 @@
 import React, { FC } from 'react'
+import { UserItemType } from '../../../types/index'
 
 interface UserItemProps {
-	user: {
-		id: string
-		login: string
-		avatar_url: string
-		html_url: string
-	}
+	user: UserItemType
 }
 
-const UserItem: FC<UserItemProps> = (props) => {
-	const { login, avatar_url, html_url } = props.user
+const UserItem: FC<UserItemProps> = ({
+	user: { login, avatar_url, html_url },
+}) => {
 	return (
 		<div className="card text-center">
 			<img
