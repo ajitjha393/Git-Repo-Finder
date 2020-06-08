@@ -3,6 +3,7 @@ import React, { Component, FormEvent } from 'react'
 class Search extends Component<{
 	searchUsers: (text: string) => void
 	clearUsers: () => void
+	setAlert: (msg: string, type: string) => void
 }> {
 	state = {
 		text: '',
@@ -10,6 +11,9 @@ class Search extends Component<{
 
 	onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		if (this.state.text === '') {
+			return this.props.setAlert('Please Enter Something', 'light')
+		}
 		this.props.searchUsers(this.state.text)
 	}
 
@@ -25,7 +29,6 @@ class Search extends Component<{
 						onChange={(e) =>
 							this.setState({ text: e.target.value })
 						}
-						required
 					/>
 					<input
 						type="submit"
