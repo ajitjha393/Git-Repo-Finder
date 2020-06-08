@@ -6,6 +6,8 @@ import Users from './components/users/Users'
 import { UserItemType } from '../types/index'
 import './App.css'
 
+const GITHUB_ENDPOINT = `https://api.github.com/users?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
+
 interface State {
 	users: UserItemType[]
 	loading: boolean
@@ -16,14 +18,24 @@ class App extends Component<{}, State> {
 		users: [] as UserItemType[],
 		loading: false,
 	}
+
 	async componentDidMount() {
 		this.setState({ loading: true })
 
-		const resData: UserItemType[] = (
+		const resData: UserItemType[] = (await axios.get(GITHUB_ENDPOINT)).data
+		console.log(resData)
+		this.setState({ users: resData, loading: false })
+	}
+
+	searchUsers = async (text: string) => {
+		this.setState({ loading: true })
+
+		const resData = (
 			await axios.get(
-				`https://api.github.com/users?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
+				`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
 			)
-		).data
+		).data.items
+
 		console.log(resData)
 		this.setState({ users: resData, loading: false })
 	}
@@ -33,7 +45,7 @@ class App extends Component<{}, State> {
 			<div className="App">
 				<Navbar title="GitHub Finder" />
 				<div className="container">
-					<Search />
+					<Search searchUsers={this.searchUsers} />
 					<Users
 						loading={this.state.loading}
 						users={this.state.users}

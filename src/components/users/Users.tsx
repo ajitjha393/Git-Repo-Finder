@@ -8,17 +8,11 @@ interface UserProps {
 }
 
 const Users: FC<UserProps> = ({ users, loading }) => {
-	const userStyle = {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(3,1fr)',
-		gridGap: '1rem',
-	}
-
 	if (loading) {
 		return <Spinner />
 	} else {
 		return (
-			<div style={userStyle}>
+			<div className="userStyles">
 				{users.map((user) => (
 					<UserItem key={user.id} user={user} />
 				))}
