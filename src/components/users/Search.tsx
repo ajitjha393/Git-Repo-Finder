@@ -1,13 +1,13 @@
 import React, { Component, FormEvent } from 'react'
 
-class Search extends Component {
+class Search extends Component<{ searchUsers: (text: string) => void }> {
 	state = {
 		text: '',
 	}
 
 	onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		console.log(this.state.text)
+		this.props.searchUsers(this.state.text)
 	}
 
 	render() {
