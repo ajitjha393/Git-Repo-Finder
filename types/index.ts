@@ -13,6 +13,7 @@ export interface UserType {
 	blog: string
 	login: string
 	html_url: string
+	company: null | string
 	followers: number
 	following: number
 	public_repos: number
