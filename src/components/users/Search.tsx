@@ -1,50 +1,47 @@
-import React, { Component, FormEvent } from 'react'
+import React, { FormEvent, FC, useState } from 'react'
 
-class Search extends Component<{
+const Search: FC<{
 	searchUsers: (text: string) => void
 	clearUsers: () => void
 	setAlert: (msg: string, type: string) => void
-}> {
-	state = {
-		text: '',
-	}
+}> = ({ searchUsers, clearUsers, setAlert }) => {
+	const [text, setText] = useState('')
 
-	onSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		if (this.state.text === '') {
-			return this.props.setAlert('Please Enter Something', 'light')
+		if (text === '') {
+			return setAlert('Please Enter Something', 'light')
 		}
-		this.props.searchUsers(this.state.text)
+		searchUsers(text)
 	}
 
-	render() {
-		return (
-			<div>
-				<form className="form" onSubmit={(e) => this.onSubmit(e)}>
-					<input
-						type="text"
-						name="text"
-						placeholder="Search Users..."
-						value={this.state.text}
-						onChange={(e) =>
-							this.setState({ text: e.target.value })
-						}
-					/>
-					<input
-						type="submit"
-						value="Search"
-						className="btn btn-dark btn-block"
-					/>
-				</form>
-				<button
-					className="btn btn-light btn-block"
-					onClick={this.props.clearUsers}
-				>
-					Clear
-				</button>
-			</div>
-		)
-	}
+	return (
+		<div>
+			<form className="form" onSubmit={(e) => onSubmit(e)}>
+				<input
+					type="text"
+					name="text"
+					placeholder="Search Users..."
+					value={text}
+					onChange={(e) => setText(e.target.value)}
+				/>
+				<input
+					type="submit"
+					value="Search"
+					className="btn btn-dark btn-block"
+				/>
+			</form>
+			<button className="btn btn-light btn-block" onClick={clearUsers}>
+				Clear
+			</button>
+		</div>
+	)
 }
+
+// {
+// 	state = {
+// 		text: '',
+// 	}
+// }
 
 export default Search
