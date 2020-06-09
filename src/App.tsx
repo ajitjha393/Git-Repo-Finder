@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './components/pages/Home'
 import About from './components/pages/About'
 import User from './components/users/User'
-import { UserItemType, UserType } from '../types/index'
+import { UserItemType, UserType, ReposType } from '../types/index'
 import './App.css'
 
 const GITHUB_ENDPOINT = `https://api.github.com/users?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
@@ -16,6 +16,7 @@ interface State {
 	loading: boolean
 	alert: null | { msg: string; type: string }
 	user: UserType
+	repos: ReposType[]
 }
 
 class App extends Component<{}, State> {
@@ -24,6 +25,7 @@ class App extends Component<{}, State> {
 		loading: false,
 		alert: null,
 		user: {} as UserType,
+		repos: [] as ReposType[],
 	}
 
 	async componentDidMount() {
@@ -59,6 +61,20 @@ class App extends Component<{}, State> {
 
 		console.log(resData)
 		this.setState({ user: resData, loading: false })
+	}
+
+	// Get User Repos
+	getUserRepos = async (username: string) => {
+		this.setState({ loading: true })
+
+		const resData = (
+			await axios.get(
+				`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
+			)
+		).data
+
+		console.log(resData)
+		this.setState({ repos: resData, loading: false })
 	}
 
 	// Clear users from the state
@@ -106,7 +122,9 @@ class App extends Component<{}, State> {
 									<User
 										{...props}
 										getUser={this.getUser}
+										getUserRepos={this.getUserRepos}
 										user={this.state.user}
+										repos={this.state.repos}
 										loading={this.state.loading}
 									/>
 								)}
