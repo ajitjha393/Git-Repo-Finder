@@ -20,3 +20,9 @@ export interface UserType {
 	public_gists: number
 	hireable: boolean
 }
+
+export interface ReposType {
+	id: string
+	html_url: string
+	name: string
+}
