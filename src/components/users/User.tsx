@@ -1,12 +1,15 @@
 import React, { Component, Fragment } from 'react'
-import { UserType } from '../../../types'
+import { UserType, ReposType } from '../../../types'
 import { RouteComponentProps } from 'react-router'
 import { Link } from 'react-router-dom'
 import Spinner from '../layout/Spinner'
+import Repos from '../repos/Repos'
 
 interface UserProps {
 	getUser: (username: string) => Promise<void>
+	getUserRepos: (username: string) => Promise<void>
 	user: UserType
+	repos: ReposType[]
 	loading: boolean
 }
 
@@ -14,8 +17,9 @@ class User extends Component<
 	UserProps & RouteComponentProps<{ login: string }>
 > {
 	componentDidMount() {
-		const { getUser } = this.props
+		const { getUser, getUserRepos } = this.props
 		getUser(this.props.match.params.login)
+		getUserRepos(this.props.match.params.login)
 	}
 
 	render() {
@@ -35,7 +39,7 @@ class User extends Component<
 			public_repos,
 		} = this.props.user
 
-		const { loading } = this.props
+		const { loading, repos } = this.props
 
 		return loading ? (
 			<Spinner />
@@ -114,6 +118,7 @@ class User extends Component<
 						Public Gists: {public_gists}
 					</div>
 				</div>
+				<Repos repos={repos} />
 			</Fragment>
 		)
 	}
