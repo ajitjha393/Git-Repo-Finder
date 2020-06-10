@@ -11,13 +11,13 @@ import './App.css'
 
 const GITHUB_ENDPOINT = `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
 
-interface State {
-	users: UserItemType[]
-	loading: boolean
-	alert: null | { msg: string; type: string }
-	user: UserType
-	repos: ReposType[]
-}
+// interface State {
+// 	users: UserItemType[]
+// 	loading: boolean
+// 	alert: null | { msg: string; type: string }
+// 	user: UserType
+// 	repos: ReposType[]
+// }
 
 const App: FC<{}> = () => {
 	const [users, setUsers] = useState([] as UserItemType[])
