@@ -8,6 +8,7 @@ import About from './components/pages/About'
 import User from './components/users/User'
 import { UserItemType, UserType, ReposType } from '../types/index'
 import './App.css'
+import { UserProvider } from '../src/context/githubUsers'
 
 const GITHUB_ENDPOINT = `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
 
@@ -111,13 +112,23 @@ const App: FC<{}> = () => {
 							exact
 							path="/"
 							render={() => (
-								<Home
-									searchUsers={searchUsers}
-									clearUsers={clearUsers}
-									setAlert={setAlert}
-									loading={loading}
-									users={users}
-								/>
+								<UserProvider
+									value={{
+										users,
+										loading,
+										setAlert,
+										searchUsers,
+										clearUsers,
+									}}
+								>
+									<Home
+									// searchUsers={searchUsers}
+									// clearUsers={clearUsers}
+									// setAlert={setAlert}
+									// loading={loading}
+									// users={users}
+									/>
+								</UserProvider>
 							)}
 						/>
 						<Route exact path="/about" component={About} />
