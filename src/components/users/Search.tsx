@@ -1,10 +1,8 @@
-import React, { FormEvent, FC, useState } from 'react'
+import React, { FormEvent, FC, useState, useContext } from 'react'
+import UserContext from '../../context/githubUsers'
 
-const Search: FC<{
-	searchUsers: (text: string) => void
-	clearUsers: () => void
-	setAlert: (msg: string, type: string) => void
-}> = ({ searchUsers, clearUsers, setAlert }) => {
+const Search: FC<{}> = () => {
+	const { searchUsers, clearUsers, setAlert } = useContext(UserContext)!
 	const [text, setText] = useState('')
 
 	const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -37,11 +35,5 @@ const Search: FC<{
 		</div>
 	)
 }
-
-// {
-// 	state = {
-// 		text: '',
-// 	}
-// }
 
 export default Search
